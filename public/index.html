@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+    <meta charset="UTF-8">
+    <script src = ./modules/jquery.js></script>
+    <script src="./modules/chart.js"></script>
+    <script src="./modules/vue.js"></script>
+    <script src="./modules/socket.io.js"></script>
+    <script src="./modules/moment.js"></script>
+    <script src="./modules/md5.js"></script>
+
+
+    <title>Vue Template</title>
+
+    <style>
+
+        body    {padding: 0; margin:0; overflow:hidden;}
+        .page   {width: 100vw; height: 100vh; overflow:hidden; background-color: black;}
+
+    </style>
+
+
+</head>
+
+<body>
+
+<div id = vueApp>
+
+<page></page>
+
+</div>
+
+
+<script>
+
+    let webSocket = io.connect(location.host);
+    let msg
+
+    Vue.component('page', {
+        /* Component */
+        template: `
+                  <div class = page >
+                    <svg width="100" height="100">
+                      <circle cx="50" cy="50" r="40" v-bind:fill=this.fillColor />
+                    </svg>
+                  </div>
+                    `,
+        data() {
+            return {
+                    fillColor: "#ff0000"
+               }
+        },
+        methods: { // all methods for components go here
+
+        },
+        computed: { // any function here is run when data is passed to component
+
+        },
+        mounted(){ // here is where things like event listeners go
+            this.$root.$on('isConn', (data) => {
+                console.log(data)
+                this.fillColor = data ? "#00ff00" : "#ff0000";
+            })
+        }
+    })
+
+    let app = new Vue({
+        el: '#vueApp',
+        data() {
+            return {
+
+            }
+        },
+        methods: {
+
+        },
+        mounted() {
+
+        }
+    })
+
+    webSocket.on('html', function(data) {
+        try {
+            msg = JSON.parse(data);
+
+            switch (msg.type) {
+                case 'isConn':
+                    if(msg.data === true){
+                        app.$root.$emit('isConn', true);
+                    }else {
+                        app.$root.$emit('isConn', false);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        } catch (ex) {
+            console.log(ex.message);
+
+        }
+    })
+
+
+
+</script>
+</body>
+</html>
+

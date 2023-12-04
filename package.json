@@ -1,0 +1,17 @@
+{
+  "name": "tcp",
+  "version": "1.0.0",
+  "main": "app-start.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "fs": "^0.0.1-security",
+    "socket.io": "^4.7.2",
+    "tcp-port-status": "^1.1.1"
+  },
+  "description": ""
+}

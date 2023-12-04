@@ -3,9 +3,9 @@
 #include <ArduinoJson.h>
 
 // WiFi setup vars
-const char* ssid = "netgear89";
-const char* password = "mightylotus540";
-const IPAddress serverIP(10,1,1,161);
+const char* ssid = "WiFiSSID";
+const char* password = "WifiPass";
+const IPAddress serverIP(10,1,1,1); // Javascript server IP
 const int serverPort = 3000; //3000 for client & 3001 for server
 WiFiClient client;
 
